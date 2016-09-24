@@ -19,7 +19,7 @@
 #
 # Visit SlackPack at http://sotirov-bg.net/slackpack/
 #
-# $Id: chromaprint.SlackBuild,v 1.1 2016/09/24 05:49:57 gsotirov Exp $
+# $Id: chromaprint.SlackBuild,v 1.2 2016/09/24 07:04:25 gsotirov Exp $
 #
 
 . ../../slack-package.conf
@@ -60,6 +60,7 @@ mkdir build; cd build
 cmake -LAH \
       -DBUILD_EXAMPLES=ON \
       -DBUILD_SHARED_LIBS=ON \
+      -DBUILD_TESTS=ON \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_CXX_FLAGS="$SLKCFLAGS" \
       -DCMAKE_C_FLAGS="$SLKCFLAGS" \
@@ -67,12 +68,13 @@ cmake -LAH \
       -DCMAKE_VERBOSE_MAKEFILE=TRUE \
       -DLIB_INSTALL_DIR=/usr/lib \
       -DLIB_SUFFIX=${LIBDIRSUFFIX} \
-      -DWITH_FFTW3=ON \
+      -DWITH_AVFFT=ON \
       .. || exit 5
 
 #     -DBUILD_TOOLS=ON \ # not compatible with ffmpeg 1.2.x
 
 make -j || exit 6
+make check || exit 61
 make DESTDIR=$PKG install || exit 7
 cd ..
 
@@ -90,13 +92,11 @@ DOCFILES="${DOCFILES} CHANGES.txt COPYING.txt NEWS.txt README.txt"
 mkdir -p $PKG/install
 install -m 644 $CWD/slack-desc     $PKG/install/slack-desc
 install -m 644 $CWD/slack-required $PKG/install/slack-required
-install -m 644 $CWD/slack-suggests $PKG/install/slack-suggests
 
 SBDIR=$PKG/usr/src/slackbuilds/${NAME}-${VERSION}
 mkdir -p $SBDIR
 install -m 644 $CWD/slack-desc         $SBDIR/slack-desc
 install -m 644 $CWD/slack-required     $SBDIR/slack-required
-install -m 644 $CWD/slack-suggests     $SBDIR/slack-suggests
 install -m 644 $CWD/${NAME}.SlackBuild $SBDIR/${NAME}.SlackBuild
 
 # Assemble
