@@ -19,13 +19,13 @@
 #
 # Visit SlackPack at http://sotirov-bg.net/slackpack/
 #
-# $Id: chromaprint.SlackBuild,v 1.4 2016/09/24 10:36:56 gsotirov Exp $
+# $Id: chromaprint.SlackBuild,v 1.5 2016/12/05 20:00:18 gsotirov Exp $
 #
 
 . ../../slack-package.conf
 
 NAME=chromaprint
-VERSION=1.3.2
+VERSION=1.4
 ARCH=${ARCH:-i586}
 BUILD=${BUILD:-1}
 
@@ -58,7 +58,6 @@ fix_source
 # Configure, build & install
 mkdir build; cd build
 cmake -LAH \
-      -DBUILD_EXAMPLES=ON \
       -DBUILD_SHARED_LIBS=ON \
       -DBUILD_TESTS=ON \
       -DCMAKE_BUILD_TYPE=Release \
@@ -66,10 +65,9 @@ cmake -LAH \
       -DCMAKE_C_FLAGS="$SLKCFLAGS" \
       -DCMAKE_INSTALL_PREFIX=/usr \
       -DCMAKE_VERBOSE_MAKEFILE=TRUE \
-      -DGTEST_SOURCE_DIR=/usr/include/gtest \
+      -DGTEST_SOURCE_DIR=/usr/src/googletest \
       -DLIB_INSTALL_DIR=/usr/lib \
       -DLIB_SUFFIX=${LIBDIRSUFFIX} \
-      -DWITH_AVFFT=ON \
       .. || exit 5
 
 make -j || exit 6
@@ -80,10 +78,10 @@ cd ..
 # Prepare
 bin_perms $PKG
 ( cd $PKG; strip_bin; strip_lib )
-DOCFILES="${DOCFILES} CHANGES.txt COPYING.txt NEWS.txt README.txt"
+DOCFILES="${DOCFILES} LICENSE.md NEWS.txt README.md"
 ( cd $SRC; create_docs $PKG ${NAME}-${VERSION} )
 ( cd $PKG/usr/doc/${NAME}-${VERSION}
-  mv COPYING.txt COPYING
+  mv LICENSE.md  COPYING
   mv NEWS.txt    NEWS
   mv README.md   README )
 
