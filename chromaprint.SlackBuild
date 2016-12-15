@@ -19,13 +19,13 @@
 #
 # Visit SlackPack at http://sotirov-bg.net/slackpack/
 #
-# $Id: chromaprint.SlackBuild,v 1.5 2016/12/05 20:00:18 gsotirov Exp $
+# $Id: chromaprint.SlackBuild,v 1.6 2016/12/15 16:37:31 gsotirov Exp $
 #
 
 . ../../slack-package.conf
 
 NAME=chromaprint
-VERSION=1.4
+VERSION=1.4.1
 ARCH=${ARCH:-i586}
 BUILD=${BUILD:-1}
 
@@ -70,7 +70,7 @@ cmake -LAH \
       -DLIB_SUFFIX=${LIBDIRSUFFIX} \
       .. || exit 5
 
-make -j || exit 6
+make -j4 || exit 6
 make check || exit 61
 make DESTDIR=$PKG install || exit 7
 cd ..
