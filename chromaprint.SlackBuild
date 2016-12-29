@@ -19,13 +19,13 @@
 #
 # Visit SlackPack at http://sotirov-bg.net/slackpack/
 #
-# $Id: chromaprint.SlackBuild,v 1.6 2016/12/15 16:37:31 gsotirov Exp $
+# $Id: chromaprint.SlackBuild,v 1.7 2016/12/29 11:37:56 gsotirov Exp $
 #
 
 . ../../slack-package.conf
 
 NAME=chromaprint
-VERSION=1.4.1
+VERSION=1.4.2
 ARCH=${ARCH:-i586}
 BUILD=${BUILD:-1}
 
